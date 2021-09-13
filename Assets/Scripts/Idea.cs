@@ -22,7 +22,6 @@ public class Idea : MonoBehaviour
     private float currentTimeIdea;
     private IEnumerator timer;
     private SphereCollider _collider;
-    private float colorHSV;
 
     private float debaf = 1;
 
@@ -74,30 +73,24 @@ public class Idea : MonoBehaviour
         {
             case ColorIdea.red:
                 renderer.materials[0].color = Color.red;
-                colorHSV = 0f;
                 break;
             case ColorIdea.green:
                 renderer.materials[0].color = Color.green;
-                colorHSV = 0.365f;
                 break;
             case ColorIdea.blue:
                 renderer.materials[0].color = Color.blue;
-                colorHSV = 0.629f;
                 break;
         }
     }
 
     IEnumerator Timer()
     {
-        float saturation = TimeLifeIdea;
-        while (saturation > 0)
+        currentTimeIdea = TimeLifeIdea;
+        while (currentTimeIdea > 0)
         {
             yield return null;
-            saturation -= Time.deltaTime * debaf;
-            var color = Color.HSVToRGB(colorHSV, saturation / TimeLifeIdea, 1);
-            renderer.materials[0].color = color;
-            renderer.materials[0].SetColor("_EmissionColor", color * 1.75f);
-            currentTimeIdea = saturation;
+            currentTimeIdea -= Time.deltaTime * debaf;
+            renderer.materials[0].SetFloat("_FillAmount", 1f - currentTimeIdea / TimeLifeIdea);
 //            Debug.Log("saturation " + saturation);
         }
 

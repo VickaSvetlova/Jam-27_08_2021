@@ -15,25 +15,22 @@ public class Idea : MonoBehaviour
 
     [SerializeField] private ColorIdea colorIdea;
     [SerializeField] private Renderer renderer;
-    [SerializeField] private float timeLifeIdea;
-    [SerializeField] private float minDebaf = 2;
-    [SerializeField] private float maxDebaf = 10;
-    private float coliderR;
+    [SerializeField] private float forceDebuf = 2f;
+    [SerializeField] private float maxDebaf = 10f;
+    [SerializeField] private float idleDebaf = 0.1f;
     private float currentTimeIdea;
+    [HideInInspector] public float timeLifeIdea;
     private IEnumerator timer;
     private SphereCollider _collider;
 
-    private float debaf = 1;
+    private float debaf = 0;
 
-    public void SetDebaf(float debaf)
+    [Header("Shader settings")]
+    [SerializeField] private Vector2 fillAmountMinMax;
+
+    public void AddDebuf(int debafCount)
     {
-        if (debaf == 1)
-        {
-            this.debaf = 1;
-            return;
-        }
-
-        this.debaf = (maxDebaf - minDebaf) * debaf + minDebaf;
+        debaf = Mathf.Clamp(debaf + debafCount * forceDebuf, 0, maxDebaf);
         //  Debug.Log("debaf " + this.debaf);
     }
 
@@ -49,12 +46,6 @@ public class Idea : MonoBehaviour
         set => currentTimeIdea = value;
     }
 
-    public float TimeLifeIdea
-    {
-        get => timeLifeIdea;
-        set => timeLifeIdea = value;
-    }
-
     private void Start()
     {
         SetColor(Color_Idea);
@@ -67,31 +58,28 @@ public class Idea : MonoBehaviour
         _collider.enabled = false;
     }
 
-    private void SetColor(ColorIdea color)
-    {
+    private void SetColor(ColorIdea color) {
+        Color c = Color.white;
         switch (color)
         {
-            case ColorIdea.red:
-                renderer.materials[0].color = Color.red;
-                break;
-            case ColorIdea.green:
-                renderer.materials[0].color = Color.green;
-                break;
-            case ColorIdea.blue:
-                renderer.materials[0].color = Color.blue;
-                break;
+            case ColorIdea.red: c = Color.red; break;
+            case ColorIdea.green: c = Color.green; break;
+            case ColorIdea.blue: c = Color.blue; break;
         }
+        renderer.materials[0].SetColor("_Tint", c);
+        renderer.materials[0].SetColor("_TopColor", c);
     }
 
     IEnumerator Timer()
     {
-        currentTimeIdea = TimeLifeIdea;
+        currentTimeIdea = timeLifeIdea;
         while (currentTimeIdea > 0)
         {
             yield return null;
-            currentTimeIdea -= Time.deltaTime * debaf;
-            renderer.materials[0].SetFloat("_FillAmount", 1f - currentTimeIdea / TimeLifeIdea);
-//            Debug.Log("saturation " + saturation);
+            currentTimeIdea -= Time.deltaTime * (debaf + idleDebaf);
+            float fillAmount = Mathf.Lerp(fillAmountMinMax.x, fillAmountMinMax.y, currentTimeIdea / timeLifeIdea);
+            renderer.materials[0].SetFloat("_FillAmount", fillAmount);
+            Debug.Log("saturation " + currentTimeIdea + " debuf " + (debaf + idleDebaf));
         }
 
         OnDestroyIdea?.Invoke(this);

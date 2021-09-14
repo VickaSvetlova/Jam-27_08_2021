@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 459357665}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: achorRadius
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1446862547}
   - component: {fileID: 1446862548}
   - component: {fileID: 5104222581821274317}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Projection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446862544}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -2.32, z: 7.31}
+  m_LocalPosition: {x: 0, y: -2.32, z: 3.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 459357665}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6595070265974584782}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: achorCenter
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -341,7 +341,7 @@ GameObject:
   m_Layer: 6
   m_Name: originHelly
   m_TagString: Untagged
-  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -463,9 +463,9 @@ MonoBehaviour:
   speedMovePatrol: 2
   speedMoveChase: 10
   speedRotation: 0.2
-  speedRotationChase: 10
+  speedRotationChase: 5
   timeToScan: 5
-  turnSpeed: 10
+  turnSpeed: 1000
   currentState: 0
   targetMove: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}

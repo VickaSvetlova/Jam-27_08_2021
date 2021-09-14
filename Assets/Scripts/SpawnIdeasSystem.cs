@@ -32,7 +32,7 @@ public class SpawnIdeasSystem : MonoBehaviour
                 var clonIdea = Instantiate(ideaPref, point.transform.position, Quaternion.identity);
                 var component = clonIdea.GetComponent<Idea>();
                 component.Color_Idea = colorIdeaOnArea;
-                component.TimeLifeIdea = IdeaCount;
+                component.timeLifeIdea = IdeaCount;
                 clonIdea.transform.SetParent(origin);
             }
         }

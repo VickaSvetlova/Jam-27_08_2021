@@ -3,8 +3,9 @@ Shader "Unlit/SpecialFX/Liquid"
     Properties
     {
         _Tint("Tint", Color) = (1,1,1,1)
+		_Emission("Tint Emission", Range(0,50)) = 0.0
         _MainTex("Texture", 2D) = "white" {}
-        _FillAmount("Fill Amount", Range(0,1)) = 0.0
+        _FillAmount("Fill Amount", Range(-10,10)) = 0.0
         [HideInInspector] _WobbleX("WobbleX", Range(-1,1)) = 0.0
         [HideInInspector] _WobbleZ("WobbleZ", Range(-1,1)) = 0.0
         _TopColor("Top Color", Color) = (1,1,1,1)
@@ -56,6 +57,7 @@ Shader "Unlit/SpecialFX/Liquid"
             float _FillAmount, _WobbleX, _WobbleZ;
             float4 _TopColor, _RimColor, _FoamColor, _Tint;
             float _Rim, _RimPower;
+			float _Emission;
 
             float4 RotateAroundYInDegrees(float4 vertex, float degrees)
             {
@@ -92,6 +94,7 @@ Shader "Unlit/SpecialFX/Liquid"
 
             fixed4 frag(v2f i, fixed facing : VFACE) : SV_Target
             {
+
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv) * _Tint;
             // apply fog
@@ -115,7 +118,7 @@ Shader "Unlit/SpecialFX/Liquid"
             // color of backfaces/ top
             float4 topColor = _TopColor * (foam + result);
             //VFACE returns positive for front facing, negative for backfacing
-            return facing > 0 ? finalResult : topColor;
+            return (facing > 0 ? finalResult : topColor) * _Emission;
 
           }
           ENDCG

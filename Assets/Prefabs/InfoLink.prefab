@@ -12,7 +12,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3508297354496720232, guid: 002a34821fc965f4c86a97331547b4a3, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0c04274b15ccd4d45a73759917cdb1cb, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.505
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -139,7 +139,6 @@ GameObject:
   - component: {fileID: 4183612816383422331}
   - component: {fileID: 4183612816383422330}
   - component: {fileID: 7779193341427625344}
-  - component: {fileID: 887526770600864107}
   m_Layer: 8
   m_Name: InfoLink
   m_TagString: Untagged
@@ -188,21 +187,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.700245, y: 6.275545, z: 0.24422726}
-  m_Center: {x: -2.710987, y: -0.36802197, z: 0.017176703}
---- !u!65 &887526770600864107
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4183612816383422332}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.3626006, y: 3.0092208, z: 0.21594343}
-  m_Center: {x: 1.1813003, y: 1.4063636, z: 0.05880423}
+  m_Size: {x: 15, y: 7, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4183612816474593250
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +227,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.024000004}
-  m_SizeDelta: {x: 3.0829, y: 1.9996}
+  m_SizeDelta: {x: 2.93, y: 1.77}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4183612816474593262
 Canvas:
@@ -343,16 +329,16 @@ RectTransform:
   m_GameObject: {fileID: 4183612816851867889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0052352995, y: 0.0052352995, z: 0.0052352995}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_Children: []
   m_Father: {fileID: 4183612816474593249}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0545, y: 0.0107}
-  m_SizeDelta: {x: 591.6501, y: 371.4275}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.42, y: 0.92}
+  m_SizeDelta: {x: 581, y: 361}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &4183612816851867902
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -386,9 +372,9 @@ MonoBehaviour:
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 6
-    m_MaxSize: 217
-    m_Alignment: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

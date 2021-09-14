@@ -21,4 +21,15 @@ public class InfoLink : MonoBehaviour
     {
         _animator.SetBool("On", b);
     }
+
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Player") Play(true);
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.tag == "Player") Play(false);
+    }
+
+
 }

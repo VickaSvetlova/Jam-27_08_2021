@@ -11,19 +11,34 @@ public class ScreenColorGame : MonoBehaviour
     [SerializeField] private Image screen;
     [SerializeField] private Image targetGameScreen;
     [SerializeField] private Text UiPercentRelation;
-    private Color targetGame;
     private float red;
     private float green;
     private float blue;
 
+    [SerializeField] private Color[] targetColors;
+
 
     private void Start()
     {
-        targetGameScreen.color = new Color(GetRandom(), GetRandom(), GetRandom());
+        targetGameScreen.color = targetColors[Random.Range(0, targetColors.Length-1)];
         OnColorTargetGame?.Invoke(targetGameScreen.color);
         OnPercentGame?.Invoke(0);
         UiPercentRelation.text = "0.0";
         //Relation();
+    }
+
+    public float CalculateResult(Color color, Color target) {
+        var diffR = Mathf.Abs(target.r - color.r);
+        var percR = Mathf.Lerp(34f, -50f, diffR);
+        var diffG = Mathf.Abs(target.g - color.g);
+        var percG = Mathf.Lerp(34f, -50f, diffG);
+        var diffB = Mathf.Abs(target.b - color.b);
+        var percB = Mathf.Lerp(34f, -50f, diffB);
+        return Mathf.Clamp(percR + percG + percB, 0, 100f);
+    }
+
+    private void Update() {
+        Relation();
     }
 
     private float GetRandom()
@@ -50,6 +65,7 @@ public class ScreenColorGame : MonoBehaviour
         Relation();
     }
 
+    [ContextMenu("RelationUpdate")]
     private void Relation()
     {
         var rColor = Mathf.Abs(screen.color.r - targetGameScreen.color.r);
@@ -58,6 +74,9 @@ public class ScreenColorGame : MonoBehaviour
         var sum = rColor + gColor + bColor;
         var del = sum / 3;
         var itog = (1 - del) * 100;
+
+        itog = CalculateResult(screen.color, targetGameScreen.color);
+
         UiPercentRelation.text = itog.ToString("0.0");
         OnPercentGame?.Invoke(itog);
         OnColorGame?.Invoke(screen.color);

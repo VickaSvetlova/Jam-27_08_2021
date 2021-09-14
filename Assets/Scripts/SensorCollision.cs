@@ -14,21 +14,20 @@ namespace DefaultNamespace
             capsuleCollider = GetComponent<CapsuleCollider>();
         }
 
-        private void OnTriggerStay(Collider other)
-        {
-            var tempPlayer = other.GetComponent<PlayerController>();
-            if (tempPlayer != null)
-            {
-                if (tempPlayer.InArm)
-                {
-                    var diametr = capsuleCollider.radius;
-                    var distanceHaterAnchor = Vector3.Distance(hater.transform.position, hater.AnchorRadius.position);
-                    var distanceHaterPlayer = Vector3.Distance(hater.transform.position, tempPlayer.transform.position);
-                    var distanceNear = distanceHaterAnchor - diametr;
-                    var far = distanceHaterAnchor - distanceNear;
-                    var player = distanceHaterPlayer - distanceNear;
-                    var cof = 1 - player / far;
-                    tempPlayer.InArm.SetDebaf(cof);
+        private void OnTriggerEnter(Collider other) {
+            if (other.tag == "Player") {
+                var tempPlayer = other.GetComponent<PlayerController>();
+                if (tempPlayer.InArm) {
+                    tempPlayer.InArm.AddDebuf(1);
+                    hater.SetState(Hater.States.Chase);
+                } 
+            }
+        }
+
+        private void OnTriggerStay(Collider other) {
+            if (other.tag == "Player") {
+                var tempPlayer = other.GetComponent<PlayerController>();
+                if (tempPlayer.InArm) {
                     hater.SetPosition(tempPlayer.transform.position);
                 } else if (hater.currentState == Hater.States.Chase) {
                     hater.SetState(Hater.States.Patrol);
@@ -38,11 +37,11 @@ namespace DefaultNamespace
 
         private void OnTriggerExit(Collider other)
         {
-            var tempPlayer = other.GetComponent<PlayerController>();
-            if (tempPlayer != null) {
+            if (other.tag == "Player") {
+                var tempPlayer = other.GetComponent<PlayerController>();
                 if (tempPlayer.InArm) {
+                    tempPlayer.InArm.AddDebuf(-1);
                     hater.SetState(Hater.States.Scan);
-                    tempPlayer.InArm.SetDebaf(1);
                 }
             }
         }

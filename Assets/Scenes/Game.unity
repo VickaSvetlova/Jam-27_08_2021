@@ -4889,7 +4889,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813826724}
-  m_LocalRotation: {x: 0.0000000020725364, y: 0.993149, z: -0.11685524, w: 0.000000017614422}
+  m_LocalRotation: {x: 0.0000000020725366, y: 0.993149, z: -0.11685524, w: 0.000000017614424}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7500,7 +7500,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482414062}
-  m_LocalRotation: {x: 0.000000004545736, y: 0.9884587, z: -0.15149069, w: 0.000000029660386}
+  m_LocalRotation: {x: 0.0000000045453348, y: 0.9884587, z: -0.15149069, w: 0.000000029657766}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7803,19 +7803,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: a7ea2ae0b6d58f24aad3db49949b8f0b, type: 3}
   m_PrefabInstance: {fileID: 870713089}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1552938610
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829495171}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1560605492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8598,37 +8585,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8134832682541550368, guid: 1070790993335b94485356a608c74bca, type: 3}
   m_PrefabInstance: {fileID: 1513600392}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1829495171
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1829495172}
-  - component: {fileID: 1552938610}
-  m_Layer: 0
-  m_Name: Recovery GameObject (1552938610)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1829495172
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829495171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1848697679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8957,7 +8913,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875244919}
-  m_LocalRotation: {x: -0, y: 0.9965982, z: -0.08241424, w: 0}
+  m_LocalRotation: {x: -0, y: 0.9965982, z: -0.08241424, w: 1e-45}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10515,7 +10471,7 @@ PrefabInstance:
       objectReference: {fileID: 825658509}
     - target: {fileID: 7385240304102100344, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: ideaCount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7385240304102100344, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: timerRespawn
@@ -10527,7 +10483,7 @@ PrefabInstance:
       objectReference: {fileID: 825658509}
     - target: {fileID: 7385240304431858194, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: ideaCount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7385240304431858194, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: timerRespawn
@@ -10587,7 +10543,7 @@ PrefabInstance:
       objectReference: {fileID: 825658509}
     - target: {fileID: 7385240305157692058, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: ideaCount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7385240305157692058, guid: 3ea55735799195341b7083dd1919b0b8, type: 3}
       propertyPath: timerRespawn

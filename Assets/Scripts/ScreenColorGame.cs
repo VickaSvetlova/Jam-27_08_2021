@@ -29,11 +29,11 @@ public class ScreenColorGame : MonoBehaviour
 
     public float CalculateResult(Color color, Color target) {
         var diffR = Mathf.Abs(target.r - color.r);
-        var percR = Mathf.Lerp(34f, -67f, diffR);
+        var percR = Mathf.Lerp(34f, -34f, diffR);
         var diffG = Mathf.Abs(target.g - color.g);
-        var percG = Mathf.Lerp(34f, -67f, diffG);
+        var percG = Mathf.Lerp(34f, -34f, diffG);
         var diffB = Mathf.Abs(target.b - color.b);
-        var percB = Mathf.Lerp(34f, -67f, diffB);
+        var percB = Mathf.Lerp(34f, -34f, diffB);
         return Mathf.Clamp(percR + percG + percB, 0, 100f);
     }
 

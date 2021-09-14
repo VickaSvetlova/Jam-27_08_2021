@@ -4,12 +4,12 @@ using UnityEngine;
 public class CharacterAiming : MonoBehaviour, IIsActive
 {
     [SerializeField] private float turnSpeed = 15;
-    private Camera camera;
+    private Transform cameraTransform;
     [SerializeField] private float distanceRay = 2;
 
     private void Start()
     {
-        camera = Camera.main;
+        cameraTransform = Camera.main.transform;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -17,7 +17,7 @@ public class CharacterAiming : MonoBehaviour, IIsActive
     private void FixedUpdate()
     {
         if (!isActive) return;
-        float yawCamera = camera.transform.rotation.eulerAngles.y;
+        float yawCamera = cameraTransform.eulerAngles.y;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0),
             turnSpeed * Time.fixedDeltaTime);
     }

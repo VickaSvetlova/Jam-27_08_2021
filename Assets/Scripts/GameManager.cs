@@ -1,3 +1,4 @@
+using Cinemachine;
 using DefaultNamespace;
 using UnityEngine;
 
@@ -33,8 +34,9 @@ public class GameManager : MonoBehaviour
         deadLine = FindObjectOfType<DeadLine>();
         blindTrigger = FindObjectOfType<BlindTrigger>();
         flashLight = FindObjectOfType<FlashLight>();
+        var cinemachine = FindObjectOfType<CinemachineFreeLook>();
         playerController = FindObjectOfType<PlayerController>();
-        aiming = FindObjectOfType<CharacterAiming>();
+        playerController.cinemachine = cinemachine;
         uiController = FindObjectOfType<UiController>();
         spawnIdeasSystem = FindObjectOfType<SpawnIdeasSystem>();
         Subscrible();
@@ -54,8 +56,7 @@ public class GameManager : MonoBehaviour
         {
             creater.OnColor += screenColorGame.SetColor;
         }
-
-        aiming.isActive = true;
+        
         playerController.isActive = true;
     }
 

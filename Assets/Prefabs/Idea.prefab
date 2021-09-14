@@ -48,9 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorIdea: 0
   renderer: {fileID: 4771842111307058152}
-  forceDebuf: 2
+  forceDebuf: 4
   maxDebaf: 10
-  idleDebaf: 1
+  idleDebaf: 0.5
   timeLifeIdea: 100
   fillAmountMinMax: {x: 0.48, y: 0.19}
 --- !u!135 &-7080110264112547709

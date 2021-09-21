@@ -17,8 +17,8 @@ namespace DefaultNamespace
         private void OnTriggerEnter(Collider other) {
             if (other.tag == "Player") {
                 var tempPlayer = other.GetComponent<PlayerController>();
-                if (tempPlayer.InArm && !tempPlayer.isHidden) {
-                    tempPlayer.InArm.AddDebuf(1);
+                if (tempPlayer.idea && !tempPlayer.isHidden) {
+                    tempPlayer.idea.AddDebuf(1);
                     hater.SetState(Hater.States.Chase);
                 } 
             }
@@ -28,7 +28,7 @@ namespace DefaultNamespace
             if (hater.currentState == Hater.States.Chase && other.tag == "Player") {
                 var tempPlayer = other.GetComponent<PlayerController>();
                 if (tempPlayer.isHidden) tempPlayer.SetHidden(false);
-                if (tempPlayer.InArm) {
+                if (tempPlayer.idea) {
                     hater.SetPosition(tempPlayer.transform.position);
                 } else {
                     hater.SetState(Hater.States.Patrol);
@@ -40,8 +40,8 @@ namespace DefaultNamespace
         {
             if (other.tag == "Player") {
                 var tempPlayer = other.GetComponent<PlayerController>();
-                if (tempPlayer.InArm && !tempPlayer.isHidden) {
-                    tempPlayer.InArm.AddDebuf(-1);
+                if (tempPlayer.idea && !tempPlayer.isHidden) {
+                    tempPlayer.idea.AddDebuf(-1);
                     hater.SetState(Hater.States.Scan);
                 }
             }

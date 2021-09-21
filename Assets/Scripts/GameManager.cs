@@ -9,6 +9,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string percent80_100;
     [SerializeField] private float MaxDeadLineTime;
 
+
+    public static PlayerController playerController;
+
+
+
+
     public enum StateGameOver
     {
         trash,
@@ -21,7 +27,6 @@ public class GameManager : MonoBehaviour
     private DeadLine deadLine;
     private BlindTrigger blindTrigger;
     private FlashLight flashLight;
-    private PlayerController playerController;
     private CharacterAiming aiming;
     private UiController uiController;
     private SpawnIdeasSystem spawnIdeasSystem;
@@ -29,17 +34,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        screenColorGame = FindObjectOfType<ScreenColorGame>();
-        creaters = FindObjectsOfType<Creater>();
-        deadLine = FindObjectOfType<DeadLine>();
-        blindTrigger = FindObjectOfType<BlindTrigger>();
-        flashLight = FindObjectOfType<FlashLight>();
-        var cinemachine = FindObjectOfType<CinemachineFreeLook>();
+        //screenColorGame = FindObjectOfType<ScreenColorGame>();
+        //creaters = FindObjectsOfType<Creater>();
+        //deadLine = FindObjectOfType<DeadLine>();
+        //blindTrigger = FindObjectOfType<BlindTrigger>();
+        //flashLight = FindObjectOfType<FlashLight>();
+        //var cinemachine = FindObjectOfType<CinemachineFreeLook>();
         playerController = FindObjectOfType<PlayerController>();
-        playerController.cinemachine = cinemachine;
-        uiController = FindObjectOfType<UiController>();
-        spawnIdeasSystem = FindObjectOfType<SpawnIdeasSystem>();
-        Subscrible();
+        //playerController.cinemachine = cinemachine;
+        //uiController = FindObjectOfType<UiController>();
+        //spawnIdeasSystem = FindObjectOfType<SpawnIdeasSystem>();
+        //Subscrible();
     }
 
     private void Subscrible()

@@ -1,163 +1,102 @@
-using Cinemachine;
-using DefaultNamespace;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IIsActive
-{
-    [SerializeField] private Transform pointIdea;
-    private Idea inArm;
+public class PlayerController : MonoBehaviour {
+
+    [Header("Params")]
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float turnSpeed;
+    [HideInInspector] public Idea idea;
+
+    [SerializeField] private float gravityForce = -9.5f;
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float fallinDistance = 3f;
+    [SerializeField] private float stepOffset = 0.3f;
+    public bool isActive { get; set; } = true;
+    public bool isHidden { get; private set; }
+    public bool isGrounded {
+        get { return controller.stepOffset != 0; }
+        private set { controller.stepOffset = (value) ? stepOffset : 0; }
+    }
+    
+    private CharacterController controller;
     private Animator animator;
-    private Rigidbody rigidbody;
-    private float horizontal, vertical;
-    [HideInInspector] public CinemachineFreeLook cinemachine;
-    [SerializeField] private GameObject flashlight;
-    [SerializeField] private GameObject objectForHide;
-    [SerializeField] private GameObject charForHide;
-    [SerializeField] private Transform cameraPoint;
-
-    [SerializeField] private float turnSpeed = 15;
+    private Transform modelTransfrom;
     private Transform cameraTransform;
-    private Vector3 defaultScale;
 
-    public Idea InArm
-    {
-        get => inArm;
-        set => inArm = value;
+    private float horizontal, vertical;
+    private Vector3 inputDirection;
+    private float gravity = -2f;
+    private float fallinStartY = 0;
+
+    private void Awake() {
+        controller = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
+        cameraTransform = Camera.main.transform;
+        modelTransfrom = animator.transform;
     }
 
-    public bool isHidden { get; private set; }
+    private void Start() {
 
-    private void Start()
-    {
-        rigidbody = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        cameraTransform = Camera.main.transform;
-        defaultScale = transform.localScale;
     }
 
     public void SetHidden(bool value) {
         isHidden = value;
-        if (inArm) {
-            var renders = inArm.GetComponentsInChildren<Renderer>();
+        if (idea) {
+            var renders = idea.GetComponentsInChildren<Renderer>();
             foreach (var render in renders) {
                 render.enabled = !value;
             }
         }
-        if (value) {
-            StopAllCoroutines();
-            StartCoroutine(IEHide());
+    }
+
+    private void Update() {
+        if (isHidden || !isActive) {
+            horizontal = 0;
+            vertical = 0;
         } else {
-            StopAllCoroutines();
-            StartCoroutine(IEShow());
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
+            var input = new Vector3(horizontal, 0, vertical);
+            inputDirection = Vector3.ClampMagnitude(input, 1f);
+            Grounding();
+            if (horizontal != 0 || vertical != 0) {
+                var rotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
+                var moveDirection = rotation * inputDirection;
+                controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+                modelTransfrom.forward = Vector3.RotateTowards(modelTransfrom.forward, moveDirection, 10f * Time.deltaTime, 1f);
+            }
         }
+        controller.Move(Vector3.up * gravity * Time.deltaTime);
     }
 
-    IEnumerator IEShow() {
-        cinemachine.LookAt = cameraPoint;
-        float timer = 0;
-        Vector3 end = new Vector3(.3f, .3f, .3f);
-        objectForHide.SetActive(false);
-        transform.localScale = end;
-        charForHide.SetActive(true);
-        while (timer < 1f) {
-            timer += 5f * Time.deltaTime;
-            transform.localScale = Vector3.Lerp(end, defaultScale * 1.3f, timer);
-            yield return null;
-        }
-        timer = 0;
-        while (timer < 1f) {
-            timer += 5f * Time.deltaTime;
-            transform.localScale = Vector3.Lerp(defaultScale * 1.3f, defaultScale, timer);
-            yield return null;
-        }
-        transform.localScale = defaultScale;
-    }
-
-    IEnumerator IEHide() {
-        float timer = 0;
-        Vector3 end = new Vector3(.3f, .3f, .3f);
-        cinemachine.LookAt = transform;
-        while (timer < 1f) {
-            timer += 5f * Time.deltaTime;
-            transform.localScale = Vector3.Lerp(defaultScale, end, timer);
-            yield return null;
-        }
-        objectForHide.SetActive(true);
-        charForHide.SetActive(false);
-        timer = 0;
-        while (timer < 1f) {
-            timer += 6f * Time.deltaTime;
-            transform.localScale = Vector3.Lerp(end, defaultScale * 1.3f, timer);
-            yield return null;
-        }
-        timer = 0;
-        while (timer < 1f) {
-            timer += 12f * Time.deltaTime;
-            transform.localScale = Vector3.Lerp(defaultScale * 1.3f, defaultScale, timer);
-            yield return null;
-        }
-        transform.localScale = defaultScale;
-    }
-
-    private void Update()
-    {
-        if (isActive) {
+    private void Grounding() {
+        if (controller.isGrounded) {
+            if (!isGrounded) {
+                isGrounded = true;
+                gravity = gravityForce;
+                if (fallinStartY - transform.position.y > fallinDistance) animator.SetTrigger("Roll");
+            }
             if (Input.GetButtonDown("Jump")) {
-                SetHidden(!isHidden);
+                isGrounded = false;
+                gravity = jumpForce;
+                fallinStartY = transform.position.y;
+                controller.Move(Vector3.up * gravity * Time.deltaTime);
+                animator.SetTrigger("Jump");
             }
-            if (!isHidden) {
-                var h = Input.GetAxis("Horizontal");
-                var v = Input.GetAxis("Vertical");
-                horizontal = Mathf.Lerp(horizontal, h, 10f * Time.deltaTime);
-                vertical = Mathf.Lerp(vertical, v, 10f * Time.deltaTime);
-                if (h != 0 || v != 0) {
-                    float yawCamera = cameraTransform.eulerAngles.y;
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0),
-                        turnSpeed * Time.deltaTime);
-                }
-                return;
+        } else {
+            if (isGrounded) {
+                isGrounded = false;
+                gravity = 0;
+                fallinStartY = transform.position.y;
             }
-        }
-        horizontal = 0;
-        vertical = 0;
-    }
-
-    private void FixedUpdate()
-    {
-        animator.SetFloat("InputX", horizontal);
-        animator.SetFloat("InputY", vertical);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        var tempIdea = other.GetComponent<Idea>();
-        var tempCreater = other.GetComponent<Creater>();
-        if (tempIdea != null && InArm == null)
-        {
-            InArm = tempIdea;
-            tempIdea.TakeIdea();
-            tempIdea.gameObject.transform.position = pointIdea.position;
-            tempIdea.gameObject.transform.SetParent(pointIdea);
-            tempIdea.OnDestroyIdea += DestroyedIdea;
-        }
-
-        if (tempCreater != null && InArm != null)
-        {
-            tempCreater.TakeColor(InArm.Color_Idea, InArm.CurrentTimeIdea);
-            var idea = InArm.gameObject;
-            inArm.OnDestroyIdea -= DestroyedIdea;
-            InArm = null;
-            Destroy(idea);
+            if (gravity > gravityForce) gravity += gravityForce * Time.deltaTime;
         }
     }
 
-    public void DestroyedIdea(Idea idea)
-    {
-        idea.OnDestroyIdea -= DestroyedIdea;
-        InArm = null;
-        Destroy(idea.gameObject);
+    private void FixedUpdate() {
+        animator.SetFloat("Speed", inputDirection.magnitude);
+        animator.SetBool("IsGrounded", isGrounded);
     }
-
-    public bool isActive { get; set; }
 }
